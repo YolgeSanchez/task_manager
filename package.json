@@ -1,0 +1,32 @@
+{
+  "name": "task-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --env-file=.env --watch src/server.ts",
+    "start": "node --env-file=.env src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YolgeSanchez/task_manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/YolgeSanchez/task_manager/issues"
+  },
+  "homepage": "https://github.com/YolgeSanchez/task_manager#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "uuid": "^14.0.1"
+  }
+}
