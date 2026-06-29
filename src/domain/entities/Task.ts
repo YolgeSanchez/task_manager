@@ -21,7 +21,7 @@ export class Task {
   }
 
   private isValidStatus(status: string): status is TaskStatus {
-    return ["completed", "cancelled", "in process"].includes(status);
+    return ["completed", "cancelled", "in_process"].includes(status);
   }
 
   get name() {
