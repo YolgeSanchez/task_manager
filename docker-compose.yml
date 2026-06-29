@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: task_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: taskdb
+    volumes:
+      - tasksData:/var/lib/postgresql/data
+
+volumes:
+  tasksData:
