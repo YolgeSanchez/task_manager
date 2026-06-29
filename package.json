@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node --env-file=.env --watch src/server.ts",
-    "start": "node --env-file=.env src/server.ts"
+    "dev": "tsx watch --env-file=.env src/server.ts",
+    "start": "tsx --env-file=.env src/server.ts"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "dotenv": "^17.4.2",
     "prisma": "^7.8.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   },
   "dependencies": {
