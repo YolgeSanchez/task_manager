@@ -1,12 +1,23 @@
 import express, { type Application } from "express";
+import taskRoutes from "./infraestructure/http/routes/TaskRoutes.js";
+import { errorHandler } from "./infraestructure/http/middlewares/errorHandler.js";
 
+// [ app ]
 const app: Application = express();
 
-// middlewares
+// [ middlewares ]
+app.use(express.json());
 
-// routes
+// [ routes ]
 app.get("/health", (_, res) => {
-  res.send(">>> Running healthy");
+  console.log(">>> Running healthy...");
+  res.send("Healthy");
 });
 
+app.use("/api", taskRoutes);
+
+// [ error handler ]
+app.use(errorHandler);
+
+// [ export ]
 export default app;
