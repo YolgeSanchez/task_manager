@@ -1,5 +1,5 @@
 import express, { type Application } from "express";
-import taskRoutes from "./infraestructure/http/routes/TaskRoutes.js";
+import { TaskRoutes } from "./infraestructure/http/routes/TaskRoutes.js";
 import { errorHandler } from "./infraestructure/http/middlewares/errorHandler.js";
 
 // [ app ]
@@ -14,7 +14,7 @@ app.get("/health", (_, res) => {
   res.send("Healthy");
 });
 
-app.use("/api", taskRoutes);
+app.use("/api", TaskRoutes);
 
 // [ error handler ]
 app.use(errorHandler);

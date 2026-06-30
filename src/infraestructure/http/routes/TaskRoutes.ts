@@ -1,11 +1,12 @@
 import { Router } from "express";
 import { taskController } from "../containers/task.index.js";
+import { validateCreateTask, validateIdParam, validateUpdateTask } from "../middlewares/task/taskValidators.js";
 const router = Router();
 
 router.get("/tasks", taskController.findAllTasks);
-router.get("/tasks/:id", taskController.findTaskById);
-router.post("/tasks", taskController.createTask);
-router.patch("/tasks/:id", taskController.updateTask);
-router.delete("/tasks/:id", taskController.deleteTask);
+router.get("/tasks/:id", validateIdParam, taskController.findTaskById);
+router.post("/tasks", validateCreateTask, taskController.createTask);
+router.patch("/tasks/:id", validateIdParam, validateUpdateTask, taskController.updateTask);
+router.delete("/tasks/:id", validateIdParam, taskController.deleteTask);
 
-export default router;
+export { router as TaskRoutes };
