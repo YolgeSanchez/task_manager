@@ -1,11 +1,11 @@
-import type { Task } from "../entities/Task.js";
-import type { ID, SuccessMessage } from "../types/types.js";
+import type { Task } from '../entities/Task.js'
+import type { ID, SuccessMessage } from '../types/types.js'
 
 export interface TaskRepository {
-  save(task: Task): Promise<Task>;
-  update(task: Task): Promise<Task>;
-  deleteById(id: ID): Promise<SuccessMessage>;
+  save(task: Task): Promise<Task>
+  update(task: Task): Promise<Task>
+  deleteById(id: ID): Promise<SuccessMessage>
 
-  findAll(): Promise<Task[]>;
-  findById(id: ID): Promise<Task | null>;
+  findAll(): Promise<Task[]>
+  findById(id: ID): Promise<Task | null>
 }
