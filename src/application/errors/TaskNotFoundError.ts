@@ -1,4 +1,4 @@
-import { AppError } from './AppError.js'
+import { AppError } from '../../domain/errors/AppError.js'
 
 export class TaskNotFoundError extends AppError {
   constructor() {

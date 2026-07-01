@@ -1,4 +1,4 @@
-import { TaskNotFoundError } from '../../../domain/errors/TaskNotFoundError.js'
+import { TaskNotFoundError } from '../../errors/TaskNotFoundError.js'
 import type { TaskRepository } from '../../../domain/repositories/TaskRepository.js'
 import type { ID } from '../../../domain/types/types.js'
 import type { TaskOutput } from '../../dtos/task.dto.js'
