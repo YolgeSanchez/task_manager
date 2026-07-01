@@ -143,7 +143,6 @@ export class User {
       name: this.props.name,
       lastName: this.props.lastName,
       email: this.props.email,
-      password: this.props.password,
       createdAt: this.props.createdAt,
       updatedAt: this.props.updatedAt,
       deletedAt: this.deletedAt,
