@@ -1,6 +1,7 @@
 import express, { type Application } from 'express'
-import { TaskRoutes } from './infraestructure/http/routes/TaskRoutes.js'
 import { errorHandler } from './infraestructure/http/middlewares/errorHandler.js'
+import { TaskRoutes } from './infraestructure/http/routes/TaskRoutes.js'
+import { UserRoutes } from './infraestructure/http/routes/UserRoutes.js'
 
 // [ app ]
 const app: Application = express()
@@ -15,6 +16,7 @@ app.get('/health', (_, res) => {
 })
 
 app.use('/api', TaskRoutes)
+app.use('/api', UserRoutes)
 
 // [ error handler ]
 app.use(errorHandler)

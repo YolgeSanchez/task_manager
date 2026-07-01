@@ -1,10 +1,8 @@
 import { Router } from 'express'
 import { taskController } from '../containers/task.index.js'
-import {
-  validateCreateTask,
-  validateIdParam,
-  validateUpdateTask,
-} from '../middlewares/task/taskValidators.js'
+import { validateIdParam } from '../middlewares/idValidator.js'
+import { validateCreateTask, validateUpdateTask } from '../middlewares/taskValidators.js'
+
 const router = Router()
 
 router.get('/tasks', taskController.findAllTasks)
