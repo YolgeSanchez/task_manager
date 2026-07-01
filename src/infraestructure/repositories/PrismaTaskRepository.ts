@@ -53,6 +53,7 @@ export class PrismaTaskRepository implements TaskRepository {
       name: task.name,
       description: task.description,
       status: task.status,
+      createdAt: task.createdAt,
       deadline: task.deadline,
     });
   }

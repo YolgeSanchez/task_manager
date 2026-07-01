@@ -6,18 +6,18 @@ interface TaskProps {
   name: string;
   description: string;
   status: TaskStatus;
+  createdAt: Date;
   deadline: Date;
 }
 
 export class Task {
-  private readonly createdAt: Date = new Date();
 
   constructor(
     public readonly id: ID,
     private props: TaskProps,
   ) {
     if (props.name.length == 0) throw new EmptyNameError();
-    if (props.deadline < this.createdAt) throw new EarlyDeadlineError();
+    if (props.deadline < props.createdAt) throw new EarlyDeadlineError();
   }
 
   private isValidStatus(status: string): status is TaskStatus {
@@ -40,6 +40,10 @@ export class Task {
     return this.props.deadline;
   }
 
+  get createdAt() {
+    return this.props.createdAt;
+  }
+
   set name(name: string) {
     if (name.length == 0) throw new EmptyNameError();
     this.props.name = name;
@@ -54,7 +58,7 @@ export class Task {
   }
 
   set deadline(deadline: Date) {
-    if (deadline < this.createdAt) throw new EarlyDeadlineError();
+    if (deadline < this.props.createdAt) throw new EarlyDeadlineError();
     this.props.deadline = deadline;
   }
 
@@ -64,7 +68,7 @@ export class Task {
       name: this.props.name,
       description: this.props.description,
       status: this.props.status,
-      createdAt: this.createdAt,
+      createdAt: this.props.createdAt,
       deadline: this.props.deadline,
     };
   }

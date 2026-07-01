@@ -6,7 +6,7 @@ export const taskStatusSchema = z.enum(["completed", "cancelled", "in_process"])
 
 export const TaskInputSchema = z.object({
   name: z.string("Name must be a defined string").min(1, { message: "Name cannot be empty" }),
-  description: z.string().optional(),
+  description: z.string("Description must be a defined string"),
   status: taskStatusSchema,
   deadline: z.coerce.date()
 })
