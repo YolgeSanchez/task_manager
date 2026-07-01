@@ -13,6 +13,19 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id        String    @id
+  username  String    @unique
+  password  String
+  name      String
+  lastName  String
+  email     String    @unique
+  tasks     Task[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
 model Task {
   id          String     @id
   name        String
@@ -20,6 +33,8 @@ model Task {
   status      TaskStatus
   createdAt   DateTime   @default(now())
   deadline    DateTime
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
 }
 
 enum TaskStatus {
