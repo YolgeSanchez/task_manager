@@ -19,10 +19,11 @@ interface UserProps {
   password: string;
   createdAt: Date;
   updatedAt: Date;
-  deletedAt?: Date;
 }
 
 export class User {
+  private deletedAt?: Date;
+
   constructor(
     public readonly id: ID,
     private props: UserProps,
@@ -68,8 +69,8 @@ export class User {
 
   // [ bussiness logic methods ]
   deleteUser() {
-    if (this.props.deletedAt) throw new UserDeletedError();
-    this.props.deletedAt = new Date();
+    if (this.deletedAt) throw new UserDeletedError();
+    this.deletedAt = new Date();
   }
 
   // [ getters and setters ]
@@ -82,6 +83,9 @@ export class User {
   get lastName() {
     return this.props.lastName;
   }
+  get fullName() {
+    return `${this.props.name} ${this.props.lastName}`;
+  }
   get email() {
     return this.props.email;
   }
@@ -93,9 +97,6 @@ export class User {
   }
   get updatedAt() {
     return this.props.updatedAt;
-  }
-  get deletedAt() {
-    return this.props.deletedAt;
   }
 
   set username(username: string) {
@@ -128,13 +129,14 @@ export class User {
     return {
       id: this.id,
       username: this.props.username,
+      fullName: this.fullName,
       name: this.props.name,
       lastName: this.props.lastName,
       email: this.props.email,
       password: this.props.password,
       createdAt: this.props.createdAt,
       updatedAt: this.props.updatedAt,
-      deletedAt: this.props.deletedAt,
+      deletedAt: this.deletedAt,
     };
   }
 }
