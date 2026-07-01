@@ -10,6 +10,7 @@ export const UserInputSchema = z.object({
 })
 
 export type UserInput = z.infer<typeof UserInputSchema>
+export type UpdateUserInput = Partial<UserInput>
 
 export interface UserOutput {
   id: ID
