@@ -9,4 +9,5 @@ export interface UserRepository {
   findAll(): Promise<User[]>
   findById(id: ID): Promise<User | null>
   findByUsername(username: string): Promise<User | null>
+  findByEmail(email: string): Promise<User | null>
 }
