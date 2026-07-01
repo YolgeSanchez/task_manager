@@ -6,6 +6,7 @@ interface TaskProps {
   name: string;
   description: string;
   status: TaskStatus;
+  userId: ID;
   createdAt: Date;
   deadline: Date;
 }
@@ -20,10 +21,12 @@ export class Task {
     if (props.deadline < props.createdAt) throw new EarlyDeadlineError();
   }
 
+  // [ validation methods ]
   private isValidStatus(status: string): status is TaskStatus {
     return ["completed", "cancelled", "in_process"].includes(status);
   }
 
+  // [ getters and setters ]
   get name() {
     return this.props.name;
   }
@@ -34,6 +37,10 @@ export class Task {
 
   get status() {
     return this.props.status;
+  }
+
+  get userId() {
+    return this.props.userId;
   }
 
   get deadline() {
@@ -68,6 +75,7 @@ export class Task {
       name: this.props.name,
       description: this.props.description,
       status: this.props.status,
+      userId: this.props.userId,
       createdAt: this.props.createdAt,
       deadline: this.props.deadline,
     };

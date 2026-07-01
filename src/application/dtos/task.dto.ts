@@ -8,6 +8,7 @@ export const TaskInputSchema = z.object({
   name: z.string("Name must be a defined string").min(1, { message: "Name cannot be empty" }),
   description: z.string("Description must be a defined string"),
   status: taskStatusSchema,
+  userId: z.uuidv4("User ID must be a valid UUID"),
   deadline: z.coerce.date()
 })
 
@@ -23,4 +24,5 @@ export interface TaskOutput {
   status: TaskStatus;
   deadline: Date;
   createdAt: Date;
+  userId: ID;
 }
