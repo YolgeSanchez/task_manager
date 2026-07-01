@@ -9,8 +9,10 @@ export const UserInputSchema = z.object({
   password: z.string('Password must be a defined string'),
 })
 
+export const UpdateUserInputSchema = UserInputSchema.partial()
+
 export type UserInput = z.infer<typeof UserInputSchema>
-export type UpdateUserInput = Partial<UserInput>
+export type UpdateUserInput = z.infer<typeof UpdateUserInputSchema>
 
 export interface UserOutput {
   id: ID
