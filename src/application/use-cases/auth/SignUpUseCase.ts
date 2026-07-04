@@ -3,10 +3,10 @@ import { User } from '../../../domain/entities/User.js'
 import type { UserRepository } from '../../../domain/repositories/UserRepository.js'
 import type { PasswordHasher } from '../../../domain/services/PasswordHasher.js'
 import type { UserInput, UserOutput } from '../../dtos/user.dto.js'
-import { UsernameInUseError } from '../../errors/UsernameInUseError.js'
 import { EmailInUseError } from '../../errors/EmailInUseError.js'
+import { UsernameInUseError } from '../../errors/UsernameInUseError.js'
 
-export class CreateUserUseCase {
+export class SignUpUseCase {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly passwordHasher: PasswordHasher,
