@@ -5,6 +5,7 @@ import type { DeleteTaskUseCase } from '../../../application/use-cases/task/Dele
 import type { FindAllTasksUseCase } from '../../../application/use-cases/task/FindAllTasksUseCase.js'
 import type { FindTaskByIdUseCase } from '../../../application/use-cases/task/FindTaskByIdUseCase.js'
 import type { UpdateTaskUseCase } from '../../../application/use-cases/task/UpdateTaskUseCase.js'
+import { UnauthorizedError } from '../errors/UnauthorizedError.js'
 
 export class TaskController {
   constructor(
@@ -18,21 +19,19 @@ export class TaskController {
 
   createTask = async (req: Request<{}, {}, TaskInput>, res: Response, next: NextFunction) => {
     try {
-      const task = await this.createTaskUseCase.execute(req.body)
+      const { sub: requestedById } = this.getAuthenticatedUser(req)
+      const task = await this.createTaskUseCase.execute(req.body, requestedById)
       res.status(201).json(task)
     } catch (err) {
       next(err)
     }
   }
 
-  // TODO: [ implement JWT to get requestedById from the user token instead of passing it as a parameter ]
-  updateTask = async (
-    req: Request<{ id: string; requestedById: string }, {}, TaskInput>,
-    res: Response,
-    next: NextFunction,
-  ) => {
+  updateTask = async (req: Request<{ id: string }, {}, TaskInput>, res: Response, next: NextFunction) => {
     try {
-      const { id, requestedById } = req.params
+      const { id } = req.params
+      const { sub: requestedById } = this.getAuthenticatedUser(req)
+
       const task = await this.updateTaskUseCase.execute(id, requestedById, req.body)
       res.status(200).json(task)
     } catch (err) {
@@ -40,13 +39,11 @@ export class TaskController {
     }
   }
 
-  deleteTask = async (
-    req: Request<{ id: string; requestedById: string }, {}, {}>,
-    res: Response,
-    next: NextFunction,
-  ) => {
+  deleteTask = async (req: Request<{ id: string }, {}, {}>, res: Response, next: NextFunction) => {
     try {
-      const { id, requestedById } = req.params
+      const { id } = req.params
+      const { sub: requestedById } = this.getAuthenticatedUser(req)
+
       const message = await this.deleteTaskUseCase.execute(id, requestedById)
       res.status(200).json({ message })
     } catch (err) {
@@ -71,5 +68,10 @@ export class TaskController {
     } catch (err) {
       next(err)
     }
+  }
+
+  private getAuthenticatedUser(req: Request) {
+    if (!req.user) throw new UnauthorizedError()
+    return req.user
   }
 }
