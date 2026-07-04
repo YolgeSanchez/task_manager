@@ -8,7 +8,8 @@
     "start": "tsx --env-file=.env src/server.ts",
     "format": "prettier --write src/",
     "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix"
+    "lint:fix": "eslint src/ --fix",
+    "generate-keys": "node --env-file=.env scripts/generate-keys.ts"
   },
   "repository": {
     "type": "git",
