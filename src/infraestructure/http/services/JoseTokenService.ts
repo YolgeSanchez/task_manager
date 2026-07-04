@@ -7,8 +7,8 @@ export class JoseTokenService implements TokenService {
   private readonly publicKey: string
 
   constructor() {
-    this.privateKey = process.env.PRIVATE_KEY!
-    this.publicKey = process.env.PUBLIC_KEY!
+    this.privateKey = process.env.PRIVATE_KEY!.replaceAll('\\n', '\n')
+    this.publicKey = process.env.PUBLIC_KEY!.replaceAll('\\n', '\n')
   }
 
   async generateToken(payload: TokenPayload, expiresIn: number = 3600): Promise<Token> {
