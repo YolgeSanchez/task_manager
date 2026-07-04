@@ -1,6 +1,7 @@
 import cookieParser from 'cookie-parser'
 import express, { type Application } from 'express'
 import { errorHandler } from './infraestructure/http/middlewares/errorHandler.js'
+import { AuthRoutes } from './infraestructure/http/routes/AuthRoutes.js'
 import { TaskRoutes } from './infraestructure/http/routes/TaskRoutes.js'
 import { UserRoutes } from './infraestructure/http/routes/UserRoutes.js'
 
@@ -17,8 +18,9 @@ app.get('/health', (_, res) => {
   res.send('Healthy')
 })
 
-app.use('/api', TaskRoutes)
+app.use('/api', AuthRoutes)
 app.use('/api', UserRoutes)
+app.use('/api', TaskRoutes)
 
 // [ error handler ]
 app.use(errorHandler)
