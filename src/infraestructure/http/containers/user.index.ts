@@ -3,8 +3,8 @@ import { DeleteUserUseCase } from '../../../application/use-cases/user/DeleteUse
 import { FindAllUsersUseCase } from '../../../application/use-cases/user/FindAllUsersUseCase.js'
 import { FindUserByIdUseCase } from '../../../application/use-cases/user/FindUserByIdUseCase.js'
 import { UpdateUserUseCase } from '../../../application/use-cases/user/UpdateUserUseCase.js'
-import { BcryptPasswordHasher } from '../../libs/BcryptPasswordHasher.js'
 import { UserController } from '../controllers/UserController.js'
+import { BcryptPasswordHasher } from '../services/BcryptPasswordHasher.js'
 import { prismaUserRepository } from './repository.index.js'
 
 const bcrypPasswordHasher = new BcryptPasswordHasher()
