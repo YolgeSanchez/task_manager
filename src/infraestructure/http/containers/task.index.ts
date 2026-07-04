@@ -3,12 +3,10 @@ import { DeleteTaskUseCase } from '../../../application/use-cases/task/DeleteTas
 import { FindAllTasksUseCase } from '../../../application/use-cases/task/FindAllTasksUseCase.js'
 import { FindTaskByIdUseCase } from '../../../application/use-cases/task/FindTaskByIdUseCase.js'
 import { UpdateTaskUseCase } from '../../../application/use-cases/task/UpdateTaskUseCase.js'
-import { PrismaTaskRepository } from '../../repositories/PrismaTaskRepository.js'
 import { TaskController } from '../controllers/TaskController.js'
+import { prismaTaskRepository, prismaUserRepository } from './repository.index.js'
 
-const prismaTaskRepository = new PrismaTaskRepository()
-
-const createTaskUseCase = new CreateTaskUseCase(prismaTaskRepository)
+const createTaskUseCase = new CreateTaskUseCase(prismaTaskRepository, prismaUserRepository)
 const updateTaskUseCase = new UpdateTaskUseCase(prismaTaskRepository)
 const deleteTaskUseCase = new DeleteTaskUseCase(prismaTaskRepository)
 

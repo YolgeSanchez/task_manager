@@ -4,10 +4,9 @@ import { FindAllUsersUseCase } from '../../../application/use-cases/user/FindAll
 import { FindUserByIdUseCase } from '../../../application/use-cases/user/FindUserByIdUseCase.js'
 import { UpdateUserUseCase } from '../../../application/use-cases/user/UpdateUserUseCase.js'
 import { BcryptPasswordHasher } from '../../libs/BcryptPasswordHasher.js'
-import { PrismaUserRepository } from '../../repositories/PrismaUserRepository.js'
 import { UserController } from '../controllers/UserController.js'
+import { prismaUserRepository } from './repository.index.js'
 
-const prismaUserRepository = new PrismaUserRepository()
 const bcrypPasswordHasher = new BcryptPasswordHasher()
 
 const createUserUseCase = new CreateUserUseCase(prismaUserRepository, bcrypPasswordHasher)
