@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser'
 import express, { type Application } from 'express'
 import { errorHandler } from './infraestructure/http/middlewares/errorHandler.js'
 import { TaskRoutes } from './infraestructure/http/routes/TaskRoutes.js'
@@ -8,6 +9,7 @@ const app: Application = express()
 
 // [ middlewares ]
 app.use(express.json())
+app.use(cookieParser())
 
 // [ routes ]
 app.get('/health', (_, res) => {
