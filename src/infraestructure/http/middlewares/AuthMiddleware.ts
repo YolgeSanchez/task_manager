@@ -3,7 +3,7 @@ import type { TokenService } from '../../../domain/services/TokenService.js'
 import { InvalidTokenError } from '../errors/InvalidTokenError.js'
 import { NoTokenError } from '../errors/NoTokenError.js'
 
-export const AuthMiddleware =
+export const authMiddleware =
   (tokenService: TokenService) => async (req: Request, _res: Response, next: NextFunction) => {
     const token = req.cookies?.token
 
