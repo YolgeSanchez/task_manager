@@ -1,5 +1,7 @@
 import cookieParser from 'cookie-parser'
 import express, { type Application } from 'express'
+import { joseTokenService } from './infraestructure/http/containers/auth.index.js'
+import { authMiddleware } from './infraestructure/http/middlewares/AuthMiddleware.js'
 import { errorHandler } from './infraestructure/http/middlewares/errorHandler.js'
 import { AuthRoutes } from './infraestructure/http/routes/AuthRoutes.js'
 import { TaskRoutes } from './infraestructure/http/routes/TaskRoutes.js'
@@ -18,7 +20,11 @@ app.get('/health', (_, res) => {
   res.send('Healthy')
 })
 
+// [ auth ]
 app.use('/api', AuthRoutes)
+app.use(authMiddleware(joseTokenService))
+
+// [ app routes ]
 app.use('/api', UserRoutes)
 app.use('/api', TaskRoutes)
 

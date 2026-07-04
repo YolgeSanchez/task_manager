@@ -1,8 +1,9 @@
 import { Router } from 'express'
 import { authController } from '../containers/auth.index.js'
-import { validateCreateUser } from '../middlewares/userValidators.js'
+import { validateSignInUser, validateSignUpUser } from '../middlewares/authValidators.js'
 
 const router = Router()
-router.post('/auth', validateCreateUser, authController.signUp)
+router.post('/auth', validateSignUpUser, authController.signUp)
+router.post('/auth/signin', validateSignInUser, authController.signIn)
 
 export { router as AuthRoutes }
