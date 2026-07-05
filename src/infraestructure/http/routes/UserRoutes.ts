@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { userController } from '../containers/user.index.js'
-import { validateIdParam } from '../middlewares/idValidator.js'
-import { validateUpdateUser } from '../middlewares/userValidators.js'
+import { validateIdParam } from '../schemas/idValidator.js'
+import { validateUpdateUser } from '../schemas/userValidators.js'
 
 const router = Router()
 
