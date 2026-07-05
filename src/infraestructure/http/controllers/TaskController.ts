@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from 'express'
 import type { TaskInput } from '../../../application/dtos/task.dto.js'
 import type { CreateTaskUseCase } from '../../../application/use-cases/task/CreateTaskUseCase.js'
 import type { DeleteTaskUseCase } from '../../../application/use-cases/task/DeleteTaskUseCase.js'
+import type { FindAllTasksByProjectIdUseCase } from '../../../application/use-cases/task/FindAllTasksByProjectIdUseCase.js'
 import type { FindAllTasksUseCase } from '../../../application/use-cases/task/FindAllTasksUseCase.js'
 import type { FindTaskByIdUseCase } from '../../../application/use-cases/task/FindTaskByIdUseCase.js'
 import type { UpdateTaskUseCase } from '../../../application/use-cases/task/UpdateTaskUseCase.js'
@@ -14,6 +15,7 @@ export class TaskController {
     private readonly deleteTaskUseCase: DeleteTaskUseCase,
 
     private readonly findAllTasksUseCase: FindAllTasksUseCase,
+    private readonly findAllTasksByProjectIdUseCase: FindAllTasksByProjectIdUseCase,
     private readonly findTaskByIdUseCase: FindTaskByIdUseCase,
   ) {}
 
@@ -54,6 +56,20 @@ export class TaskController {
   findAllTasks = async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const tasks = await this.findAllTasksUseCase.execute()
+      res.status(200).json(tasks)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  findAllTasksByProjectId = async (
+    req: Request<{ projectId: string }, {}, {}>,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { sub: requestedById } = this.getAuthenticatedUser(req)
+      const tasks = await this.findAllTasksByProjectIdUseCase.execute(req.params, requestedById)
       res.status(200).json(tasks)
     } catch (err) {
       next(err)
