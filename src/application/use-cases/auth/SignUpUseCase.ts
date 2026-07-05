@@ -29,6 +29,7 @@ export class SignUpUseCase {
     const user = new User(uuidv4(), {
       ...userInput,
       password: hashedPassword,
+      projectsIds: [],
       createdAt: new Date(),
       updatedAt: new Date(),
     })
