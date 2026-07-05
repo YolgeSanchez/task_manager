@@ -11,6 +11,10 @@ const updateTaskUseCase = new UpdateTaskUseCase(prismaTaskRepository)
 const deleteTaskUseCase = new DeleteTaskUseCase(prismaTaskRepository)
 
 const findAllTasksUseCase = new FindAllTasksUseCase(prismaTaskRepository)
+// const findAllTasksByProjectIdUseCase = new FindAllTasksByProjectIdUseCase(
+//   prismaTaskRepository,
+//   prismaUserRepository,
+// )
 const findByIdUseCase = new FindTaskByIdUseCase(prismaTaskRepository)
 
 const taskController = new TaskController(

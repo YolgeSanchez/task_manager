@@ -43,6 +43,13 @@ export class PrismaTaskRepository implements TaskRepository {
     return tasks.map((task) => this.toEntity(task))
   }
 
+  async findAllByProjectId(projectId: ID): Promise<Task[]> {
+    const tasks = await prisma.task.findMany({
+      where: { projectId: projectId },
+    })
+    return tasks.map((task) => this.toEntity(task))
+  }
+
   async findById(id: ID): Promise<Task | null> {
     const task = await prisma.task.findUnique({ where: { id } })
     return task ? this.toEntity(task) : null
@@ -54,6 +61,7 @@ export class PrismaTaskRepository implements TaskRepository {
       description: task.description,
       status: task.status,
       userId: task.userId,
+      projectId: task.projectId,
       createdAt: task.createdAt,
       deadline: task.deadline,
     })
