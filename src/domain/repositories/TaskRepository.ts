@@ -7,5 +7,6 @@ export interface TaskRepository {
   deleteById(id: ID): Promise<SuccessMessage>
 
   findAll(): Promise<Task[]>
+  findAllByProjectId(projectId: ID): Promise<Task[]>
   findById(id: ID): Promise<Task | null>
 }
