@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { authController } from '../containers/auth.index.js'
-import { validateSignInUser, validateSignUpUser } from '../middlewares/authValidators.js'
+import { validateSignInUser, validateSignUpUser } from '../schemas/authValidators.js'
 
 const router = Router()
 router.post('/auth', validateSignUpUser, authController.signUp)

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { taskController } from '../containers/task.index.js'
-import { validateIdParam } from '../schemas/idValidator.js'
+import { validateIdParam } from '../schemas/paramsValidators.js'
 import { validateCreateTask, validateProjectIdParam, validateUpdateTask } from '../schemas/taskValidators.js'
 
 const router = Router()
