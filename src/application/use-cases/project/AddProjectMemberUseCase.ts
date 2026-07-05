@@ -1,7 +1,7 @@
 import type { ProjectRepository } from '../../../domain/repositories/ProjectRepository.js'
 import type { UserRepository } from '../../../domain/repositories/UserRepository.js'
 import type { ID } from '../../../domain/types/types.js'
-import type { MemberIdInput, ProjectOutput } from '../../dtos/project.dto.js'
+import type { ProjectOutput } from '../../dtos/project.dto.js'
 import { MemberNotFoundError } from '../../errors/MemberNotFoundError.js'
 import { NotAuthorizedToPerformError } from '../../errors/NotAuthorizedToPerformError.js'
 import { ProjectNotFoundError } from '../../errors/ProjectNotFoundError.js'
@@ -13,7 +13,7 @@ export class AddProjectMemberUseCase {
     private readonly userRepository: UserRepository,
   ) {}
 
-  async execute(id: ID, { memberId }: MemberIdInput, requestedById: ID): Promise<ProjectOutput> {
+  async execute(id: ID, memberId: ID, requestedById: ID): Promise<ProjectOutput> {
     // [ check existances ]
     const user = await this.userRepository.findById(requestedById)
     if (user == null) throw new UserNotFoundError()

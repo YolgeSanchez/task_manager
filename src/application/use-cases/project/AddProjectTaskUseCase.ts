@@ -2,7 +2,7 @@ import type { ProjectRepository } from '../../../domain/repositories/ProjectRepo
 import type { TaskRepository } from '../../../domain/repositories/TaskRepository.js'
 import type { UserRepository } from '../../../domain/repositories/UserRepository.js'
 import type { ID } from '../../../domain/types/types.js'
-import type { ProjectOutput, TaskIdInput } from '../../dtos/project.dto.js'
+import type { ProjectOutput } from '../../dtos/project.dto.js'
 import { ProjectNotFoundError } from '../../errors/ProjectNotFoundError.js'
 import { TaskNotFoundError } from '../../errors/TaskNotFoundError.js'
 import { UserNotFoundError } from '../../errors/UserNotFoundError.js'
@@ -14,7 +14,7 @@ export class AddProjectTaskUseCase {
     private readonly taskRepository: TaskRepository,
   ) {}
 
-  async execute(id: ID, { taskId }: TaskIdInput, requestedById: ID): Promise<ProjectOutput> {
+  async execute(id: ID, taskId: ID, requestedById: ID): Promise<ProjectOutput> {
     // [ check existances ]
     const user = await this.userRepository.findById(requestedById)
     if (user == null) throw new UserNotFoundError()
