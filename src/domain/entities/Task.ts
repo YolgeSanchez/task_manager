@@ -7,6 +7,7 @@ interface TaskProps {
   description: string
   status: TaskStatus
   userId: ID
+  projectId?: ID | null
   createdAt: Date
   deadline: Date
 }
@@ -25,6 +26,15 @@ export class Task {
     return ['completed', 'cancelled', 'in_process'].includes(status)
   }
 
+  // [ logic methods ]
+  addToProject(projectId: ID) {
+    this.props.projectId = projectId
+  }
+
+  removeFromProject() {
+    this.props.projectId = null
+  }
+
   // [ getters and setters ]
   get name() {
     return this.props.name
@@ -40,6 +50,10 @@ export class Task {
 
   get userId() {
     return this.props.userId
+  }
+
+  get projectId() {
+    return this.props.projectId
   }
 
   get deadline() {
@@ -75,6 +89,7 @@ export class Task {
       description: this.props.description,
       status: this.props.status,
       userId: this.props.userId,
+      projectId: this.props.projectId,
       createdAt: this.props.createdAt,
       deadline: this.props.deadline,
     }

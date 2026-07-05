@@ -17,6 +17,7 @@ interface UserProps {
   lastName: string
   email: string
   password: string
+  projectsIds: ID[]
   createdAt: Date
   updatedAt: Date
 }
@@ -70,6 +71,14 @@ export class User {
   deleteUser() {
     if (this.deletedAt) throw new UserDeletedError()
     this.deletedAt = new Date()
+  }
+
+  addProject(projectId: ID) {
+    this.props.projectsIds.push(projectId)
+  }
+
+  removeProject(projectId: ID) {
+    this.props.projectsIds = this.props.projectsIds.filter((id) => id !== projectId)
   }
 
   // [ getters and setters ]
