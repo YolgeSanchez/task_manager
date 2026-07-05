@@ -1,7 +1,7 @@
 import cookieParser from 'cookie-parser'
 import express, { type Application } from 'express'
 import { joseTokenService } from './infraestructure/http/containers/auth.index.js'
-import { authMiddleware } from './infraestructure/http/middlewares/AuthMiddleware.js'
+import { authMiddleware } from './infraestructure/http/middlewares/authMiddleware.js'
 import { errorHandler } from './infraestructure/http/middlewares/errorHandler.js'
 import { AuthRoutes } from './infraestructure/http/routes/AuthRoutes.js'
 import { TaskRoutes } from './infraestructure/http/routes/TaskRoutes.js'
