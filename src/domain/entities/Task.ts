@@ -7,7 +7,7 @@ interface TaskProps {
   description: string
   status: TaskStatus
   userId: ID
-  projectId?: ID | null
+  projectId: ID | null
   createdAt: Date
   deadline: Date
 }

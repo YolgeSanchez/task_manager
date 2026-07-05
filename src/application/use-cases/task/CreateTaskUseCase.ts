@@ -16,7 +16,12 @@ export class CreateTaskUseCase {
     const user = await this.userRepository.findById(requestedById)
     if (user == null) throw new UserNotFoundError()
 
-    const task = new Task(uuidv4(), { ...taskInput, userId: requestedById, createdAt: new Date() })
+    const task = new Task(uuidv4(), {
+      ...taskInput,
+      userId: requestedById,
+      projectId: null,
+      createdAt: new Date(),
+    })
     const savedTask = await this.taskRepository.save(task)
     return savedTask.toJSON()
   }

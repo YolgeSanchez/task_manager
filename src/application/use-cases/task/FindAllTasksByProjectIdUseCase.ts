@@ -7,7 +7,7 @@ import type { ProjectIdInput } from '../../dtos/types.dto.js'
 import { ProjectNotFoundError } from '../../errors/ProjectNotFoundError.js'
 import { UserNotFoundError } from '../../errors/UserNotFoundError.js'
 
-export class FindAllByProjectIdUseCase {
+export class FindAllTasksByProjectIdUseCase {
   constructor(
     private readonly taskRepository: TaskRepository,
     private readonly userRepository: UserRepository,
