@@ -4,6 +4,7 @@ import { joseTokenService } from './infraestructure/http/containers/auth.index.j
 import { authMiddleware } from './infraestructure/http/middlewares/authMiddleware.js'
 import { errorHandler } from './infraestructure/http/middlewares/errorHandler.js'
 import { AuthRoutes } from './infraestructure/http/routes/AuthRoutes.js'
+import { projectRoutes } from './infraestructure/http/routes/ProjectRoutes.js'
 import { TaskRoutes } from './infraestructure/http/routes/TaskRoutes.js'
 import { UserRoutes } from './infraestructure/http/routes/UserRoutes.js'
 
@@ -27,6 +28,7 @@ app.use(authMiddleware(joseTokenService))
 // [ app routes ]
 app.use('/api', UserRoutes)
 app.use('/api', TaskRoutes)
+app.use('/api', projectRoutes)
 
 // [ error handler ]
 app.use(errorHandler)
