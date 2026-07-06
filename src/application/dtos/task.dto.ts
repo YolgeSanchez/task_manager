@@ -22,6 +22,7 @@ export interface TaskOutput {
   description: string
   status: TaskStatus
   deadline: Date
+  projectId: ID | null
   createdAt: Date
   userId: ID
 }
