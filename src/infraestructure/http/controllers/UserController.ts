@@ -4,6 +4,7 @@ import type { DeleteUserUseCase } from '../../../application/use-cases/user/Dele
 import type { FindAllUsersUseCase } from '../../../application/use-cases/user/FindAllUsersUseCase.js'
 import type { FindUserByIdUseCase } from '../../../application/use-cases/user/FindUserByIdUseCase.js'
 import type { UpdateUserUseCase } from '../../../application/use-cases/user/UpdateUserUseCase.js'
+import { UnauthorizedError } from '../errors/UnauthorizedError.js'
 
 export class UserController {
   constructor(
@@ -17,7 +18,8 @@ export class UserController {
   updateUser = async (req: Request<{ id: string }, {}, UserInput>, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params
-      const user = await this.updateUserUseCase.execute(id, req.body)
+      const { sub: requestedById } = this.getAuthenticatedUser(req)
+      const user = await this.updateUserUseCase.execute(id, requestedById, req.body)
       res.status(200).json(user)
     } catch (err) {
       next(err)
@@ -27,7 +29,8 @@ export class UserController {
   deleteUser = async (req: Request<{ id: string }, {}, {}>, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params
-      const message = await this.deleteUserUseCase.execute(id)
+      const { sub: requestedById } = this.getAuthenticatedUser(req)
+      const message = await this.deleteUserUseCase.execute(id, requestedById)
       res.status(200).json({ message })
     } catch (err) {
       next(err)
@@ -51,5 +54,10 @@ export class UserController {
     } catch (err) {
       next(err)
     }
+  }
+
+  private getAuthenticatedUser(req: Request) {
+    if (!req.user) throw new UnauthorizedError()
+    return req.user
   }
 }
