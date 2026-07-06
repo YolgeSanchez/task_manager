@@ -3,13 +3,23 @@ services:
     image: postgres:16-alpine
     container_name: task_db
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
       POSTGRES_DB: taskdb
     volumes:
       - tasksData:/var/lib/postgresql/data
+
+  db_test:
+    image: postgres:16-alpine
+    container_name: task_db_test
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: taskdb_test
+    ports:
+      - '5433:5432'
 
 volumes:
   tasksData:
