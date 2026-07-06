@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
-import { Task } from '../../src/domain/entities/Task.js'
-import { prisma } from '../../src/infraestructure/libs/prisma.js'
-import { PrismaTaskRepository } from '../../src/infraestructure/repositories/PrismaTaskRepository.js'
-import { cleanDatabase } from './helpers/cleanDatabase.js'
+import { Task } from '../../../src/domain/entities/Task.js'
+import { prisma } from '../../../src/infraestructure/libs/prisma.js'
+import { PrismaTaskRepository } from '../../../src/infraestructure/repositories/PrismaTaskRepository.js'
+import { cleanDatabase } from '../helpers/cleanDatabase.js'
 
 const repository = new PrismaTaskRepository()
 

@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
-import { prisma } from '../../src/infraestructure/libs/prisma.js'
-import { PrismaUserRepository } from '../../src/infraestructure/repositories/PrismaUserRepository.js'
-import { cleanDatabase } from './helpers/cleanDatabase.js'
+import { prisma } from '../../../src/infraestructure/libs/prisma.js'
+import { PrismaUserRepository } from '../../../src/infraestructure/repositories/PrismaUserRepository.js'
+import { cleanDatabase } from '../helpers/cleanDatabase.js'
 
 const repository = new PrismaUserRepository()
 
@@ -39,7 +39,7 @@ beforeEach(async () => {
 describe('PrismaUserRepository', () => {
   describe('save', () => {
     it('should save a user successfully', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       const saved = await repository.save(user)
@@ -49,7 +49,7 @@ describe('PrismaUserRepository', () => {
     })
 
     it('should persist the user in the database', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       await repository.save(user)
@@ -59,7 +59,7 @@ describe('PrismaUserRepository', () => {
     })
 
     it('should return user with empty projectsIds', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       const saved = await repository.save(user)
@@ -69,7 +69,7 @@ describe('PrismaUserRepository', () => {
 
   describe('findById', () => {
     it('should find a user by id', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       await repository.save(user)
@@ -84,7 +84,7 @@ describe('PrismaUserRepository', () => {
     })
 
     it('should return null when user is soft deleted', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       await repository.save(user)
@@ -96,7 +96,7 @@ describe('PrismaUserRepository', () => {
 
   describe('findByUsername', () => {
     it('should find a user by username', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       await repository.save(user)
@@ -113,7 +113,7 @@ describe('PrismaUserRepository', () => {
 
   describe('findByEmail', () => {
     it('should find a user by email', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       await repository.save(user)
@@ -130,7 +130,7 @@ describe('PrismaUserRepository', () => {
 
   describe('findAll', () => {
     it('should return all users', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const user1 = new User(uuidv4(), makeUserData({ username: 'user1', email: 'user1@example.com' }))
       const user2 = new User(uuidv4(), makeUserData({ username: 'user2', email: 'user2@example.com' }))
       await repository.save(user1)
@@ -145,7 +145,7 @@ describe('PrismaUserRepository', () => {
     })
 
     it('should not return soft deleted users', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       await repository.save(user)
@@ -157,7 +157,7 @@ describe('PrismaUserRepository', () => {
 
   describe('update', () => {
     it('should update a user successfully', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       await repository.save(user)
@@ -167,7 +167,7 @@ describe('PrismaUserRepository', () => {
     })
 
     it('should persist the update in the database', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       await repository.save(user)
@@ -180,7 +180,7 @@ describe('PrismaUserRepository', () => {
 
   describe('deleteById', () => {
     it('should soft delete a user successfully', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       await repository.save(user)
@@ -189,7 +189,7 @@ describe('PrismaUserRepository', () => {
     })
 
     it('should set deletedAt in the database', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       await repository.save(user)
@@ -199,7 +199,7 @@ describe('PrismaUserRepository', () => {
     })
 
     it('should not physically delete the user from the database', async () => {
-      const { User } = await import('../../src/domain/entities/User.js')
+      const { User } = await import('../../../src/domain/entities/User.js')
       const data = makeUserData()
       const user = new User(data.id, data)
       await repository.save(user)
