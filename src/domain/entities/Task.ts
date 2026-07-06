@@ -18,7 +18,7 @@ export class Task {
     private props: TaskProps,
   ) {
     if (props.name.length == 0) throw new EmptyNameError()
-    if (props.deadline < props.createdAt) throw new EarlyDeadlineError()
+    if (props.deadline <= props.createdAt) throw new EarlyDeadlineError()
   }
 
   // [ validation methods ]
@@ -78,7 +78,7 @@ export class Task {
   }
 
   set deadline(deadline: Date) {
-    if (deadline < this.props.createdAt) throw new EarlyDeadlineError()
+    if (deadline <= this.props.createdAt) throw new EarlyDeadlineError()
     this.props.deadline = deadline
   }
 
