@@ -9,6 +9,7 @@
     "format": "prettier --write src/",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
+    "test": "vitest",
     "generate-keys": "node --env-file=.env scripts/generate-keys.ts"
   },
   "repository": {
@@ -37,7 +38,8 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.62.1"
+    "typescript-eslint": "^8.62.1",
+    "vitest": "^4.1.9"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
