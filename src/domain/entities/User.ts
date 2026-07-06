@@ -106,6 +106,10 @@ export class User {
     return this.props.password
   }
 
+  get projectsIds() {
+    return this.props.projectsIds
+  }
+
   get createdAt() {
     return this.props.createdAt
   }
