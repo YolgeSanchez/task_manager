@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
+import { NotAuthorizedToPerformError } from '../../src/application/errors/NotAuthorizedToPerformError.js'
 import { UserNotFoundError } from '../../src/application/errors/UserNotFoundError.js'
 import { DeleteUserUseCase } from '../../src/application/use-cases/user/DeleteUserUseCase.js'
 import { FindAllUsersUseCase } from '../../src/application/use-cases/user/FindAllUsersUseCase.js'
@@ -135,23 +136,23 @@ describe('UpdateUserUseCase', () => {
     useCase = new UpdateUserUseCase(userRepository)
   })
 
-  it('should update username successfully', async () => {
-    const result = await useCase.execute('user-id-1', { username: 'new_username' })
+  it('should update username successfully when updating himself', async () => {
+    const result = await useCase.execute('user-id-1', 'user-id-1', { username: 'new_username' })
     expect(result.username).toBe('new_username')
   })
 
   it('should update name successfully', async () => {
-    const result = await useCase.execute('user-id-1', { name: 'Jane' })
+    const result = await useCase.execute('user-id-1', 'user-id-1', { name: 'Jane' })
     expect(result.name).toBe('Jane')
   })
 
   it('should update email successfully', async () => {
-    const result = await useCase.execute('user-id-1', { email: 'newemail@example.com' })
+    const result = await useCase.execute('user-id-1', 'user-id-1', { email: 'newemail@example.com' })
     expect(result.email).toBe('newemail@example.com')
   })
 
   it('should update multiple fields at once', async () => {
-    const result = await useCase.execute('user-id-1', {
+    const result = await useCase.execute('user-id-1', 'user-id-1', {
       username: 'updated_user',
       name: 'Updated',
     })
@@ -160,26 +161,47 @@ describe('UpdateUserUseCase', () => {
   })
 
   it('should throw UserNotFoundError when user does not exist', async () => {
-    await expect(useCase.execute('non-existing-id', { username: 'new_username' })).rejects.toThrow(
-      UserNotFoundError,
+    await expect(
+      useCase.execute('non-existing-id', 'non-existing-id', { username: 'new_username' }),
+    ).rejects.toThrow(UserNotFoundError)
+  })
+
+  it('should throw NotAuthorizedToPerformError when requester is not the target user', async () => {
+    await expect(useCase.execute('user-id-1', 'other-user-id', { username: 'new_username' })).rejects.toThrow(
+      NotAuthorizedToPerformError,
     )
   })
 
+  it('should not modify the user when requester is not authorized', async () => {
+    await expect(
+      useCase.execute('user-id-1', 'other-user-id', { username: 'hacked_username' }),
+    ).rejects.toThrow(NotAuthorizedToPerformError)
+
+    const user = await userRepository.findById('user-id-1')
+    expect(user?.username).toBe('john_doe')
+  })
+
   it('should throw EmptyUsernameError when setting empty username', async () => {
-    await expect(useCase.execute('user-id-1', { username: '' })).rejects.toThrow(EmptyUsernameError)
+    await expect(useCase.execute('user-id-1', 'user-id-1', { username: '' })).rejects.toThrow(
+      EmptyUsernameError,
+    )
   })
 
   it('should throw InvalidEmailError when setting invalid email', async () => {
-    await expect(useCase.execute('user-id-1', { email: 'not-an-email' })).rejects.toThrow(InvalidEmailError)
+    await expect(useCase.execute('user-id-1', 'user-id-1', { email: 'not-an-email' })).rejects.toThrow(
+      InvalidEmailError,
+    )
   })
 
   it('should throw InvalidPasswordError when setting short password', async () => {
-    await expect(useCase.execute('user-id-1', { password: '123' })).rejects.toThrow(InvalidPasswordError)
+    await expect(useCase.execute('user-id-1', 'user-id-1', { password: '123' })).rejects.toThrow(
+      InvalidPasswordError,
+    )
   })
 
   it('should not modify fields that are not passed', async () => {
-    await useCase.execute('user-id-1', { username: 'new_username' })
-    const result = await useCase.execute('user-id-1', { name: 'Jane' })
+    await useCase.execute('user-id-1', 'user-id-1', { username: 'new_username' })
+    const result = await useCase.execute('user-id-1', 'user-id-1', { name: 'Jane' })
     expect(result.username).toBe('new_username')
     expect(result.name).toBe('Jane')
     expect(result.email).toBe('john@example.com')
@@ -195,17 +217,28 @@ describe('DeleteUserUseCase', () => {
     useCase = new DeleteUserUseCase(userRepository)
   })
 
-  it('should delete a user successfully', async () => {
-    const result = await useCase.execute('user-id-1')
+  it('should delete a user successfully when deleting himself', async () => {
+    const result = await useCase.execute('user-id-1', 'user-id-1')
     expect(result).toBe('User has been deleted successfully.')
   })
 
   it('should throw UserNotFoundError when user does not exist', async () => {
-    await expect(useCase.execute('non-existing-id')).rejects.toThrow(UserNotFoundError)
+    await expect(useCase.execute('non-existing-id', 'non-existing-id')).rejects.toThrow(UserNotFoundError)
+  })
+
+  it('should throw NotAuthorizedToPerformError when requester is not the target user', async () => {
+    await expect(useCase.execute('user-id-1', 'other-user-id')).rejects.toThrow(NotAuthorizedToPerformError)
+  })
+
+  it('should not delete the user when requester is not authorized', async () => {
+    await expect(useCase.execute('user-id-1', 'other-user-id')).rejects.toThrow(NotAuthorizedToPerformError)
+
+    const user = await userRepository.findById('user-id-1')
+    expect(user).not.toBeNull()
   })
 
   it('should make user unfindable after deletion', async () => {
-    await useCase.execute('user-id-1')
+    await useCase.execute('user-id-1', 'user-id-1')
     const findUseCase = new FindUserByIdUseCase(userRepository)
     await expect(findUseCase.execute('user-id-1')).rejects.toThrow(UserNotFoundError)
   })
