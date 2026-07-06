@@ -5,7 +5,7 @@ import { PrismaClient } from '../../generated/prisma/client.js'
 const connectionString = `${process.env.DATABASE_URL}`
 
 const adapter = new PrismaPg({ connectionString })
-const prisma = new PrismaClient({ adapter, log: ['query', 'info', 'warn', 'error'] })
+const prisma = new PrismaClient({ adapter })
 
 console.log('>>> Prisma Client initialized successfully...')
 
