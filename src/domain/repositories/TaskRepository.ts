@@ -6,7 +6,7 @@ export interface TaskRepository {
   update(task: Task): Promise<Task>
   deleteById(id: ID): Promise<SuccessMessage>
 
-  findAll(): Promise<Task[]>
+  findAllByUserId(userId: ID): Promise<Task[]>
   findAllByProjectId(projectId: ID): Promise<Task[]>
   findById(id: ID): Promise<Task | null>
 }

@@ -134,16 +134,19 @@ describe('GET /api/tasks', () => {
     expect(res.status).toBe(403)
   })
 
-  it('should return all tasks regardless of owner', async () => {
+  it('should return only tasks belonging to the authenticated user', async () => {
     const { cookies: cookiesA } = await signUpAndGetAuth(userA)
     const { cookies: cookiesB } = await signUpAndGetAuth(userB)
+
     await createTask(cookiesA)
     await createTask(cookiesB)
 
     const res = await request(app).get('/api/tasks').set('Cookie', cookiesA)
 
     expect(res.status).toBe(200)
-    expect(res.body).toHaveLength(2)
+    expect(res.body).toHaveLength(1)
+
+    expect(res.body[0].userId).toBeDefined()
   })
 
   it('should return empty array when no tasks exist', async () => {

@@ -3,7 +3,7 @@ import type { TaskInput } from '../../../application/dtos/task.dto.js'
 import type { CreateTaskUseCase } from '../../../application/use-cases/task/CreateTaskUseCase.js'
 import type { DeleteTaskUseCase } from '../../../application/use-cases/task/DeleteTaskUseCase.js'
 import type { FindAllTasksByProjectIdUseCase } from '../../../application/use-cases/task/FindAllTasksByProjectIdUseCase.js'
-import type { FindAllTasksUseCase } from '../../../application/use-cases/task/FindAllTasksUseCase.js'
+import type { FindAllTasksByUserIdUseCase } from '../../../application/use-cases/task/FindAllTasksByUserIdUseCase.js'
 import type { FindTaskByIdUseCase } from '../../../application/use-cases/task/FindTaskByIdUseCase.js'
 import type { UpdateTaskUseCase } from '../../../application/use-cases/task/UpdateTaskUseCase.js'
 import { UnauthorizedError } from '../errors/UnauthorizedError.js'
@@ -14,7 +14,7 @@ export class TaskController {
     private readonly updateTaskUseCase: UpdateTaskUseCase,
     private readonly deleteTaskUseCase: DeleteTaskUseCase,
 
-    private readonly findAllTasksUseCase: FindAllTasksUseCase,
+    private readonly findAllTasksByUserIdUseCase: FindAllTasksByUserIdUseCase,
     private readonly findAllTasksByProjectIdUseCase: FindAllTasksByProjectIdUseCase,
     private readonly findTaskByIdUseCase: FindTaskByIdUseCase,
   ) {}
@@ -53,9 +53,10 @@ export class TaskController {
     }
   }
 
-  findAllTasks = async (_req: Request, res: Response, next: NextFunction) => {
+  findAllTasksByUserId = async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      const tasks = await this.findAllTasksUseCase.execute()
+      const { sub: requestedById } = this.getAuthenticatedUser(_req)
+      const tasks = await this.findAllTasksByUserIdUseCase.execute(requestedById)
       res.status(200).json(tasks)
     } catch (err) {
       next(err)

@@ -1,7 +1,7 @@
 import { CreateTaskUseCase } from '../../../application/use-cases/task/CreateTaskUseCase.js'
 import { DeleteTaskUseCase } from '../../../application/use-cases/task/DeleteTaskUseCase.js'
 import { FindAllTasksByProjectIdUseCase } from '../../../application/use-cases/task/FindAllTasksByProjectIdUseCase.js'
-import { FindAllTasksUseCase } from '../../../application/use-cases/task/FindAllTasksUseCase.js'
+import { FindAllTasksByUserIdUseCase } from '../../../application/use-cases/task/FindAllTasksByUserIdUseCase.js'
 import { FindTaskByIdUseCase } from '../../../application/use-cases/task/FindTaskByIdUseCase.js'
 import { UpdateTaskUseCase } from '../../../application/use-cases/task/UpdateTaskUseCase.js'
 import { TaskController } from '../controllers/TaskController.js'
@@ -11,7 +11,10 @@ const createTaskUseCase = new CreateTaskUseCase(prismaTaskRepository, prismaUser
 const updateTaskUseCase = new UpdateTaskUseCase(prismaTaskRepository)
 const deleteTaskUseCase = new DeleteTaskUseCase(prismaTaskRepository)
 
-const findAllTasksUseCase = new FindAllTasksUseCase(prismaTaskRepository)
+const findAllTasksByUserIdUseCase = new FindAllTasksByUserIdUseCase(
+  prismaTaskRepository,
+  prismaUserRepository,
+)
 const findAllTasksByProjectIdUseCase = new FindAllTasksByProjectIdUseCase(
   prismaTaskRepository,
   prismaUserRepository,
@@ -24,7 +27,7 @@ const taskController = new TaskController(
   updateTaskUseCase,
   deleteTaskUseCase,
 
-  findAllTasksUseCase,
+  findAllTasksByUserIdUseCase,
   findAllTasksByProjectIdUseCase,
 
   findByIdUseCase,

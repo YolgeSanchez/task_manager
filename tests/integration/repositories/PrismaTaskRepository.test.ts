@@ -119,20 +119,35 @@ describe('PrismaTaskRepository', () => {
     })
   })
 
-  describe('findAll', () => {
-    it('should return all tasks', async () => {
+  describe('findAllByUserId', () => {
+    it('should return all tasks belonging to the given user', async () => {
       const user = await makeUserInDb()
       const data1 = makeTaskData(user.id, { name: 'Task 1' })
       const data2 = makeTaskData(user.id, { name: 'Task 2' })
       await repository.save(new Task(data1.id, data1))
       await repository.save(new Task(data2.id, data2))
-      const tasks = await repository.findAll()
+      const tasks = await repository.findAllByUserId(user.id)
       expect(tasks).toHaveLength(2)
     })
 
-    it('should return empty array when no tasks exist', async () => {
-      const tasks = await repository.findAll()
+    it('should return empty array when user has no tasks', async () => {
+      const user = await makeUserInDb()
+      const tasks = await repository.findAllByUserId(user.id)
       expect(tasks).toHaveLength(0)
+    })
+
+    it('should not return tasks belonging to another user', async () => {
+      const userA = await makeUserInDb()
+      const userB = await makeUserInDb()
+
+      const dataA = makeTaskData(userA.id, { name: 'Task A' })
+      const dataB = makeTaskData(userB.id, { name: 'Task B' })
+      await repository.save(new Task(dataA.id, dataA))
+      await repository.save(new Task(dataB.id, dataB))
+
+      const tasks = await repository.findAllByUserId(userA.id)
+      expect(tasks).toHaveLength(1)
+      expect(tasks[0].id).toBe(dataA.id)
     })
   })
 

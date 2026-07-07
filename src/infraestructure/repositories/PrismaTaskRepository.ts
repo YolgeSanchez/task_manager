@@ -38,8 +38,10 @@ export class PrismaTaskRepository implements TaskRepository {
     return `Task has been deleted successfully.`
   }
 
-  async findAll(): Promise<Task[]> {
-    const tasks = await prisma.task.findMany()
+  async findAllByUserId(userId: ID): Promise<Task[]> {
+    const tasks = await prisma.task.findMany({
+      where: { userId: userId },
+    })
     return tasks.map((task) => this.toEntity(task))
   }
 

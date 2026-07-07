@@ -4,6 +4,7 @@ import { TaskNotFoundError } from '../../src/application/errors/TaskNotFoundErro
 import { UserNotFoundError } from '../../src/application/errors/UserNotFoundError.js'
 import { CreateTaskUseCase } from '../../src/application/use-cases/task/CreateTaskUseCase.js'
 import { DeleteTaskUseCase } from '../../src/application/use-cases/task/DeleteTaskUseCase.js'
+import { FindAllTasksByUserIdUseCase } from '../../src/application/use-cases/task/FindAllTasksByUserIdUseCase.js'
 import { FindTaskByIdUseCase } from '../../src/application/use-cases/task/FindTaskByIdUseCase.js'
 import { UpdateTaskUseCase } from '../../src/application/use-cases/task/UpdateTaskUseCase.js'
 import type { Task } from '../../src/domain/entities/Task.js'
@@ -32,8 +33,8 @@ class FakeTaskRepository implements TaskRepository {
     return 'Task has been deleted successfully.'
   }
 
-  async findAll(): Promise<Task[]> {
-    return this.tasks
+  async findAllByUserId(userId: ID): Promise<Task[]> {
+    return this.tasks.filter((t) => t.userId === userId)
   }
 
   async findAllByProjectId(projectId: ID): Promise<Task[]> {
@@ -161,6 +162,52 @@ describe('FindTaskByIdUseCase', () => {
 
   it('should throw TaskNotFoundError when task does not exist', async () => {
     await expect(useCase.execute('non-existing-id')).rejects.toThrow(TaskNotFoundError)
+  })
+})
+
+describe('FindAllTasksByUserIdUseCase', () => {
+  let taskRepository: FakeTaskRepository
+  let userRepository: FakeUserRepository
+  let useCase: FindAllTasksByUserIdUseCase
+
+  beforeEach(() => {
+    taskRepository = new FakeTaskRepository()
+    userRepository = new FakeUserRepository([makeUser({ id: 'user-id-1' })])
+    useCase = new FindAllTasksByUserIdUseCase(taskRepository, userRepository)
+  })
+
+  it('should return all tasks belonging to the user', async () => {
+    const createUseCase = new CreateTaskUseCase(taskRepository, userRepository)
+    await createUseCase.execute(makeTaskInput({ name: 'Task 1' }), 'user-id-1')
+    await createUseCase.execute(makeTaskInput({ name: 'Task 2' }), 'user-id-1')
+
+    const result = await useCase.execute('user-id-1')
+    expect(result).toHaveLength(2)
+  })
+
+  it('should return empty array when user has no tasks', async () => {
+    const result = await useCase.execute('user-id-1')
+    expect(result).toHaveLength(0)
+  })
+
+  it('should not return tasks belonging to another user', async () => {
+    userRepository = new FakeUserRepository([
+      makeUser({ id: 'user-id-1' }),
+      makeUser({ id: 'user-id-2', username: 'jane_doe' }),
+    ])
+    useCase = new FindAllTasksByUserIdUseCase(taskRepository, userRepository)
+    const createUseCase = new CreateTaskUseCase(taskRepository, userRepository)
+
+    await createUseCase.execute(makeTaskInput({ name: 'Task A' }), 'user-id-1')
+    await createUseCase.execute(makeTaskInput({ name: 'Task B' }), 'user-id-2')
+
+    const result = await useCase.execute('user-id-1')
+    expect(result).toHaveLength(1)
+    expect(result[0].name).toBe('Task A')
+  })
+
+  it('should throw UserNotFoundError when user does not exist', async () => {
+    await expect(useCase.execute('non-existing-id')).rejects.toThrow(UserNotFoundError)
   })
 })
 

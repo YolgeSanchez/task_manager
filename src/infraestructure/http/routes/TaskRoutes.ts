@@ -5,7 +5,7 @@ import { validateCreateTask, validateProjectIdParam, validateUpdateTask } from '
 
 const router = Router()
 
-router.get('/tasks', taskController.findAllTasks)
+router.get('/tasks', taskController.findAllTasksByUserId)
 router.get('/projects/:projectId/tasks', validateProjectIdParam, taskController.findAllTasksByProjectId)
 router.get('/tasks/:id', validateIdParam, taskController.findTaskById)
 router.post('/tasks', validateCreateTask, taskController.createTask)
