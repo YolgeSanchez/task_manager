@@ -1,6 +1,6 @@
 import { decodeJwt, importPKCS8, importSPKI, jwtVerify, SignJWT, type JWTPayload } from 'jose'
-import type { TokenPayload, TokenService } from '../../domain/services/TokenService.js'
-import type { Token } from '../../domain/types/types.js'
+import type { TokenPayload, TokenService } from '../../../domain/services/TokenService.js'
+import type { Token } from '../../../domain/types/types.js'
 
 export class JoseTokenService implements TokenService {
   private readonly privateKey: string

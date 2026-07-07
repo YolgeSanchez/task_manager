@@ -1,7 +1,7 @@
 import { SignInUseCase } from '../../../application/use-cases/auth/SignInUseCase.js'
 import { SignUpUseCase } from '../../../application/use-cases/auth/SignUpUseCase.js'
-import { BcryptPasswordHasher } from '../../shared/BcryptPasswordHasher.js'
-import { JoseTokenService } from '../../shared/JoseTokenService.js'
+import { BcryptPasswordHasher } from '../../shared/services/BcryptPasswordHasher.js'
+import { JoseTokenService } from '../../shared/services/JoseTokenService.js'
 import { AuthController } from '../controllers/AuthController.js'
 import { prismaUserRepository } from './repository.index.js'
 
