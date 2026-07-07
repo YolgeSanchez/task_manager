@@ -2,6 +2,7 @@ import cookieParser from 'cookie-parser'
 import express, { type Application } from 'express'
 import { joseTokenService } from './infrastructure/api/containers/auth.index.js'
 import { authMiddleware } from './infrastructure/api/middlewares/authMiddleware.js'
+import { corsMiddleware } from './infrastructure/api/middlewares/cors.js'
 import { errorHandler } from './infrastructure/api/middlewares/errorHandler.js'
 import { apiRateLimiter, authRateLimiter } from './infrastructure/api/middlewares/rateLimiter.js'
 import { AuthRoutes } from './infrastructure/api/routes/AuthRoutes.js'
@@ -13,6 +14,7 @@ import { UserRoutes } from './infrastructure/api/routes/UserRoutes.js'
 const app: Application = express()
 
 // [ middlewares ]
+app.use(corsMiddleware)
 app.use(express.json())
 app.use(cookieParser())
 
