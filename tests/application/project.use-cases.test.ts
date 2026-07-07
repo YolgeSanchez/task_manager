@@ -69,8 +69,8 @@ class FakeTaskRepository implements TaskRepository {
     return 'Task has been deleted successfully.'
   }
 
-  async findAll(): Promise<Task[]> {
-    return this.tasks
+  async findAllByUserId(userId: ID): Promise<Task[]> {
+    return this.tasks.filter((t) => t.userId === userId)
   }
 
   async findAllByProjectId(projectId: ID): Promise<Task[]> {
