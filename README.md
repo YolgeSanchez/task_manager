@@ -256,8 +256,6 @@ node scripts/generate-keys.ts
 
 npm run dev
 
-```
-
 ### Variables de entorno (`.env`)
 
 ```
@@ -293,4 +291,7 @@ NODE_ENV="development"
 
 - `findByUsername` y `findByEmail` en `PrismaUserRepository` no filtran por `deletedAt: null` — un usuario eliminado con username o email único bloquea el re-registro con esa credencial. Diferido intencionalmente.
 - `Task` no implementa soft delete — solo hard delete.
+
+```
+
 ```
