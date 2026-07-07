@@ -53,6 +53,7 @@
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
     "jose": "^6.2.3",
     "pg": "^8.22.0",
     "uuid": "^14.0.1",

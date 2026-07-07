@@ -1,12 +1,13 @@
 import cookieParser from 'cookie-parser'
 import express, { type Application } from 'express'
-import { joseTokenService } from './infraestructure/http/containers/auth.index.js'
-import { authMiddleware } from './infraestructure/http/middlewares/authMiddleware.js'
-import { errorHandler } from './infraestructure/http/middlewares/errorHandler.js'
-import { AuthRoutes } from './infraestructure/http/routes/AuthRoutes.js'
-import { projectRoutes } from './infraestructure/http/routes/ProjectRoutes.js'
-import { TaskRoutes } from './infraestructure/http/routes/TaskRoutes.js'
-import { UserRoutes } from './infraestructure/http/routes/UserRoutes.js'
+import { joseTokenService } from './infrastructure/api/containers/auth.index.js'
+import { authMiddleware } from './infrastructure/api/middlewares/authMiddleware.js'
+import { errorHandler } from './infrastructure/api/middlewares/errorHandler.js'
+import { apiRateLimiter, authRateLimiter } from './infrastructure/api/middlewares/rateLimiter.js'
+import { AuthRoutes } from './infrastructure/api/routes/AuthRoutes.js'
+import { projectRoutes } from './infrastructure/api/routes/ProjectRoutes.js'
+import { TaskRoutes } from './infrastructure/api/routes/TaskRoutes.js'
+import { UserRoutes } from './infrastructure/api/routes/UserRoutes.js'
 
 // [ app ]
 const app: Application = express()
@@ -20,6 +21,10 @@ app.get('/health', (_, res) => {
   console.log('>>> Running healthy...')
   res.send('Healthy')
 })
+
+// [ rate limiters ]
+app.use('/api/auth', authRateLimiter)
+app.use('/api', apiRateLimiter)
 
 // [ auth ]
 app.use('/api', AuthRoutes)
