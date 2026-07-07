@@ -15,5 +15,8 @@ const parsedEnv = envSchema.safeParse(process.env)
 if (!parsedEnv.success) {
   console.error('Invalid environment variables:')
   console.error(parsedEnv.error.format())
+  console.log('>>> Env variables are invalid, exiting the process...')
   process.exit(1)
 }
+
+console.log('>>> Env variables validated successfully!')

@@ -1,4 +1,5 @@
 import app from './app.js'
+import './config/env.js'
 
 const port = process.env.PORT || 3000
 
