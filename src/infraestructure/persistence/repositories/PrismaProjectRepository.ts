@@ -1,7 +1,7 @@
-import { Project } from '../../domain/entities/Project.js'
-import type { ProjectRepository } from '../../domain/repositories/ProjectRepository.js'
-import type { ID, SuccessMessage } from '../../domain/types/types.js'
-import { prisma } from '../libs/prisma.js'
+import { Project } from '../../../domain/entities/Project.js'
+import type { ProjectRepository } from '../../../domain/repositories/ProjectRepository.js'
+import type { ID, SuccessMessage } from '../../../domain/types/types.js'
+import { prisma } from '../prisma.js'
 
 type ProjectWithRelations = {
   id: string

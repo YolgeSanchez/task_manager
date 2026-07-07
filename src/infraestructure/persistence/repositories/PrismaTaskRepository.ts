@@ -1,8 +1,8 @@
-import { Task } from '../../domain/entities/Task.js'
-import type { TaskRepository } from '../../domain/repositories/TaskRepository.js'
-import type { ID, SuccessMessage } from '../../domain/types/types.js'
-import type { TaskModel } from '../../generated/prisma/models.js'
-import { prisma } from '../libs/prisma.js'
+import { Task } from '../../../domain/entities/Task.js'
+import type { TaskRepository } from '../../../domain/repositories/TaskRepository.js'
+import type { ID, SuccessMessage } from '../../../domain/types/types.js'
+import type { TaskModel } from '../../../generated/prisma/models.js'
+import { prisma } from '../prisma.js'
 
 export class PrismaTaskRepository implements TaskRepository {
   async save(task: Task): Promise<Task> {
