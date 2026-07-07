@@ -262,8 +262,8 @@ npm run dev
 
 ```
 
-PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\ Key content here\n-----END PRIVATE KEY-----"
-PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\ Key content here\n-----END PUBLIC KEY-----"
+PRIVATE_KEY="Key content here"
+PUBLIC_KEY="Key content here"
 PORT=3000
 DATABASE_URL="postgresql://root:root@localhost:5432/taskdb"
 DATABASE_TEST_URL="postgresql://root:root@localhost:5433/taskdb_test"
