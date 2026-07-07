@@ -1,8 +1,8 @@
 import request from 'supertest'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import app from '../../../src/app.js'
-import { JoseTokenService } from '../../../src/infraestructure/http/services/JoseTokenService.js'
-import { prisma } from '../../../src/infraestructure/libs/prisma.js'
+import { prisma } from '../../../src/infrastructure/persistence/prisma.js'
+import { JoseTokenService } from '../../../src/infrastructure/shared/JoseTokenService.js'
 import { cleanDatabase } from '../helpers/cleanDatabase.js'
 
 const tokenService = new JoseTokenService()

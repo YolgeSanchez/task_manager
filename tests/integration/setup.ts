@@ -1,5 +1,5 @@
 import { execSync } from 'child_process'
-import { prisma } from '../../src/infraestructure/libs/prisma'
+import { prisma } from '../../src/infrastructure/persistence/prisma.js'
 
 export async function setup() {
   execSync('npx prisma migrate deploy', {

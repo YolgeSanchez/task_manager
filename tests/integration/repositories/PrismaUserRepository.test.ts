@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
-import { prisma } from '../../../src/infraestructure/libs/prisma.js'
-import { PrismaUserRepository } from '../../../src/infraestructure/repositories/PrismaUserRepository.js'
+import { prisma } from '../../../src/infrastructure/persistence/prisma.js'
+import { PrismaUserRepository } from '../../../src/infrastructure/persistence/repositories/PrismaUserRepository.js'
 import { cleanDatabase } from '../helpers/cleanDatabase.js'
 
 const repository = new PrismaUserRepository()
