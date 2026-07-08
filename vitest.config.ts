@@ -18,6 +18,7 @@ export default defineConfig({
           fileParallelism: false,
           env: {
             DATABASE_URL: process.env.DATABASE_TEST_URL ?? '',
+            NODE_ENV: 'test',
           },
         },
       },
